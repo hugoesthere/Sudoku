@@ -21,6 +21,7 @@
 		F624826619CA3A92000646B7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F624824819CA3A92000646B7 /* UIKit.framework */; };
 		F624826E19CA3A92000646B7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F624826C19CA3A92000646B7 /* InfoPlist.strings */; };
 		F624827019CA3A92000646B7 /* SudokuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F624826F19CA3A92000646B7 /* SudokuTests.m */; };
+		F624827B19CA3AC0000646B7 /* HHSLGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = F624827A19CA3AC0000646B7 /* HHSLGridView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		F624826B19CA3A92000646B7 /* SudokuTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SudokuTests-Info.plist"; sourceTree = "<group>"; };
 		F624826D19CA3A92000646B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F624826F19CA3A92000646B7 /* SudokuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SudokuTests.m; sourceTree = "<group>"; };
+		F624827919CA3AC0000646B7 /* HHSLGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSLGridView.h; sourceTree = "<group>"; };
+		F624827A19CA3AC0000646B7 /* HHSLGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSLGridView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,8 @@
 				F624825619CA3A92000646B7 /* Main.storyboard */,
 				F624825919CA3A92000646B7 /* HHSLViewController.h */,
 				F624825A19CA3A92000646B7 /* HHSLViewController.m */,
+				F624827919CA3AC0000646B7 /* HHSLGridView.h */,
+				F624827A19CA3AC0000646B7 /* HHSLGridView.m */,
 				F624825C19CA3A92000646B7 /* Images.xcassets */,
 				F624824B19CA3A92000646B7 /* Supporting Files */,
 			);
@@ -251,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F624825119CA3A92000646B7 /* main.m in Sources */,
+				F624827B19CA3AC0000646B7 /* HHSLGridView.m in Sources */,
 				F624825B19CA3A92000646B7 /* HHSLViewController.m in Sources */,
 				F624825519CA3A92000646B7 /* HHSLAppDelegate.m in Sources */,
 			);

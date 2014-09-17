@@ -1,14 +1,18 @@
 //
 //  HHSLViewController.m
-//  Sudoku
+//  sudoku
 //
-//  Created by Hugo Ho on 9/17/14.
+//  Created by Hugo Ho on 9/11/14.
 //  Copyright (c) 2014 Hugo Ho and Shannon Lin. All rights reserved.
 //
 
 #import "HHSLViewController.h"
+#import "HHSLGridView.h"
 
-@interface HHSLViewController ()
+@interface HHSLViewController () {
+    UIButton* _button;
+    UIView* _gridView;
+}
 
 @end
 
@@ -18,6 +22,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    //create grid frame
+    CGRect frame = self.view.frame;
+    
+    CGFloat x = CGRectGetWidth(frame)*.1;
+    CGFloat y = CGRectGetHeight(frame)*.1;
+    CGFloat size = MIN(CGRectGetWidth(frame), CGRectGetHeight(frame))*.80;
+    CGRect gridFrame = CGRectMake(x, y, size, size);
+    
+    _gridView = [[HHSLGridView alloc] initWithFrame:gridFrame];
+    
+    [self.view addSubview:_gridView];
+    
 }
 
 - (void)didReceiveMemoryWarning
