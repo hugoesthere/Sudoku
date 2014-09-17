@@ -42,7 +42,7 @@ int initialGrid[9][9] = {
         
         CGFloat buttonSize = size/11.0;
         
-        
+        // Change this!
         for (int column = 0; column < 9; ++column) {
             NSMutableArray* cellsInColumn;
             for (int row = 0; row < 9; ++row) {
