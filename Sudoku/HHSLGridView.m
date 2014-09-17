@@ -9,7 +9,7 @@
 #import "HHSLGridView.h"
 
 @interface HHSLGridView () {
-    NSMutableArray *_arrOfColumns;
+    NSMutableArray *_arrayOfCells;
 }
 
 @end
@@ -31,73 +31,83 @@ int initialGrid[9][9] = {
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    
     if (self) {
         // Initialization code
-        
         self.backgroundColor = [UIColor blackColor];
-        
         CGFloat size = CGRectGetWidth(frame);
-        
-        NSLog(@"size: %f", size);
-        
         CGFloat buttonSize = size/11.0;
         
-        // Change this!
+        // Array for sudoku cells
+        for (int i = 0; i < 9; ++i) {
+            NSMutableArray* cellsInColumn = [[NSMutableArray alloc] initWithCapacity:9];
+            [_arrayOfCells insertObject:cellsInColumn atIndex:i];
+        }
+        
         for (int column = 0; column < 9; ++column) {
-            NSMutableArray* cellsInColumn;
             for (int row = 0; row < 9; ++row) {
-                int y_bigspace = (row / 3) * (size / 50.0);
-                int x_bigspace = (column / 3) * (size / 50.0);
-                int x = (size / 25.0) + (column) * (buttonSize + (size / 122.0)) + x_bigspace;
-                int y = (size / 25.0) + (row) * (buttonSize + (size/ 122.0)) + y_bigspace;
+                // Create dimensions of each cell
+                int yBigspace = (row / 3) * (size / 50.0);      // Extra space to denote sub (3x3) grid
+                int xBigspace = (column / 3) * (size / 50.0);   // Extra space to denote sub (3x3) grid
+                int framePadding = (size / 25.0);
+                int cellSize = (buttonSize + (size / 122.0));   // Includes spacing between cells
+                int x = (column) * cellSize + framePadding + xBigspace;
+                int y = (row) * cellSize + framePadding + yBigspace;
+                
+                // Initializing button & cell (which is a button) UI
                 CGRect buttonFrame = CGRectMake(x,y, buttonSize, buttonSize);
                 UIButton* button = [[UIButton alloc] initWithFrame:buttonFrame];
                 button.backgroundColor = [UIColor whiteColor];
                 button.tag = row + 10*column;
                 [self addSubview:button];
                 
-                [button addTarget:self action:@selector(highlightButton:) forControlEvents:UIControlEventTouchDown];
-                [button addTarget:self action:@selector(resetButton:) forControlEvents:UIControlEventTouchUpInside];
-                [button addTarget:self action:@selector(resetButton:) forControlEvents:UIControlEventTouchUpOutside];
-                
-                //create target for button
+                // Highlight cell when clicked
                 [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                int cellNumber = initialGrid[column][row];
-                NSString *label;
-                if(cellNumber == 0)
-                    label = @"";
-                else
-                    label = [NSString stringWithFormat:@"%d", cellNumber];
+                [button setBackgroundImage:[self imageWithColor: [UIColor yellowColor]] forState:UIControlStateHighlighted];
                 
+                // Create cell title, which displays value of cell
+                int cellValue = initialGrid[column][row];
+                NSString *label = @"";
+                if (cellValue != 0) {
+                    label = [NSString stringWithFormat:@"%d", cellValue];
+                }
+                
+                // UI for cell titles
                 [button setTitle:label forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                 
-                [cellsInColumn insertObject:button atIndex:row];
+                // Adding button to _arrOfColumns
+                [[_arrayOfCells objectAtIndex:column] insertObject:button atIndex:row];
             }
-            
-            [_arrOfColumns insertObject:cellsInColumn atIndex:column];
+
         }
         
     }
     return self;
 }
 
-- (void)buttonPressed: (id)sender
+- (void)buttonPressed:(id)sender
 {
-    UIButton* button = (UIButton*)sender;
-    NSLog([NSString stringWithFormat:@"Row: %d Column %d", button.tag % 10, button.tag / 10]);
+    int row = [sender tag]%10;
+    int col = [sender tag]/10;
+    NSLog(@"Button in Column %d and Row %d was pressed", col, row);
 }
 
-- (void)highlightButton: (id)sender
-{
-    UIButton* button = (UIButton*)sender;
-    [button setBackgroundColor:[UIColor yellowColor]];
-}
-
-- (void)resetButton: (id)sender
-{
-    UIButton* button = (UIButton*)sender;
-    [button setBackgroundColor:[UIColor whiteColor]];
+// Method from:
+// stackoverflow.com/questions/990976/how-to-create-a-colored-1x1-uiimage-on-the-iphone-dynamically
+// Creates UIImage to display on highlight
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 50 , 50);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 @end
