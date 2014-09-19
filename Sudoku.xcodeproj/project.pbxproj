@@ -22,6 +22,8 @@
 		F624826E19CA3A92000646B7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F624826C19CA3A92000646B7 /* InfoPlist.strings */; };
 		F624827019CA3A92000646B7 /* SudokuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F624826F19CA3A92000646B7 /* SudokuTests.m */; };
 		F624827B19CA3AC0000646B7 /* HHSLGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = F624827A19CA3AC0000646B7 /* HHSLGridView.m */; };
+		F684DEA719CCDEE9008E6AE8 /* HHSLGridModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F684DEA619CCDEE9008E6AE8 /* HHSLGridModel.m */; };
+		F684DEAA19CCDFE2008E6AE8 /* HHSLNumPadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F684DEA919CCDFE2008E6AE8 /* HHSLNumPadView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,10 @@
 		F624826F19CA3A92000646B7 /* SudokuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SudokuTests.m; sourceTree = "<group>"; };
 		F624827919CA3AC0000646B7 /* HHSLGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSLGridView.h; sourceTree = "<group>"; };
 		F624827A19CA3AC0000646B7 /* HHSLGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSLGridView.m; sourceTree = "<group>"; };
+		F684DEA519CCDEE9008E6AE8 /* HHSLGridModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSLGridModel.h; sourceTree = "<group>"; };
+		F684DEA619CCDEE9008E6AE8 /* HHSLGridModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSLGridModel.m; sourceTree = "<group>"; };
+		F684DEA819CCDFE2008E6AE8 /* HHSLNumPadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSLNumPadView.h; sourceTree = "<group>"; };
+		F684DEA919CCDFE2008E6AE8 /* HHSLNumPadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSLNumPadView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +126,10 @@
 				F624825619CA3A92000646B7 /* Main.storyboard */,
 				F624825919CA3A92000646B7 /* HHSLViewController.h */,
 				F624825A19CA3A92000646B7 /* HHSLViewController.m */,
+				F684DEA819CCDFE2008E6AE8 /* HHSLNumPadView.h */,
+				F684DEA919CCDFE2008E6AE8 /* HHSLNumPadView.m */,
+				F684DEA519CCDEE9008E6AE8 /* HHSLGridModel.h */,
+				F684DEA619CCDEE9008E6AE8 /* HHSLGridModel.m */,
 				F624827919CA3AC0000646B7 /* HHSLGridView.h */,
 				F624827A19CA3AC0000646B7 /* HHSLGridView.m */,
 				F624825C19CA3A92000646B7 /* Images.xcassets */,
@@ -255,7 +265,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F684DEA719CCDEE9008E6AE8 /* HHSLGridModel.m in Sources */,
 				F624825119CA3A92000646B7 /* main.m in Sources */,
+				F684DEAA19CCDFE2008E6AE8 /* HHSLNumPadView.m in Sources */,
 				F624827B19CA3AC0000646B7 /* HHSLGridView.m in Sources */,
 				F624825B19CA3A92000646B7 /* HHSLViewController.m in Sources */,
 				F624825519CA3A92000646B7 /* HHSLAppDelegate.m in Sources */,
@@ -465,6 +477,7 @@
 				F624827519CA3A92000646B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F624827619CA3A92000646B7 /* Build configuration list for PBXNativeTarget "SudokuTests" */ = {
 			isa = XCConfigurationList;
@@ -473,6 +486,7 @@
 				F624827819CA3A92000646B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
