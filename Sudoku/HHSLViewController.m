@@ -35,18 +35,22 @@
     _gridView = [[HHSLGridView alloc] initWithFrame:gridFrame];
     [self.view addSubview:_gridView];
     
+    // Create num pad
     CGFloat numPadX = gridX;
     CGFloat numPadY = gridY + gridSize + CGRectGetHeight(frame)*.1;
     CGFloat numPadWidth = gridSize;
     CGFloat numPadHeight = CGRectGetHeight(frame)*.15;
     CGRect numPadFrame = CGRectMake(numPadX, numPadY, numPadWidth, numPadHeight);
     
+    // Instantiate _numPad and add it to the ViewController
     _numPad = [[HHSLNumPadView alloc] initWithFrame:numPadFrame];
     [self.view addSubview:_numPad];
-    
-    
-    
-    
+}
+
+- (void) buttonPressed:(HHSLGridView *)controller sender:(id)sender {
+    int row = [sender tag]%10;
+    int col = [sender tag]/10;
+    NSLog(@"Button in Column %d and Row %d was pressed", col, row);
 }
 
 - (void)didReceiveMemoryWarning

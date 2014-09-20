@@ -62,7 +62,7 @@ int initialGrid[9][9] = {
                 [self addSubview:button];
                 
                 // Highlight cell when clicked
-                [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                [button addTarget:self action:@selector(pressed:) forControlEvents:UIControlEventTouchUpInside];
                 [button setBackgroundImage:[self imageWithColor: [UIColor yellowColor]] forState:UIControlStateHighlighted];
                 
                 // Create cell title, which displays value of cell
@@ -86,11 +86,17 @@ int initialGrid[9][9] = {
     return self;
 }
 
-- (void)buttonPressed:(id)sender
+//- (void)buttonPressed:(id)sender
+//{
+//    int row = [sender tag]%10;
+//    int col = [sender tag]/10;
+//    NSLog(@"Button in Column %d and Row %d was pressed", col, row);
+//    
+//}
+
+-(void)pressed: (id)sender
 {
-    int row = [sender tag]%10;
-    int col = [sender tag]/10;
-    NSLog(@"Button in Column %d and Row %d was pressed", col, row);
+    [self.delegate buttonPressed:self sender:sender];
 }
 
 // Method from:

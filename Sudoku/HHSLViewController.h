@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HHSLGridView.h"
 
-@interface HHSLViewController : UIViewController
+
+@interface HHSLViewController : UIViewController <gridDelegate>
+
 
 @end
+
+
+

@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class HHSLGridView;
+@protocol gridDelegate <NSObject>;
+
+-(void)buttonPressed:(HHSLGridView *)controller sender:(id)sender;
+
+@end
+
 @interface HHSLGridView : UIView
+
+@property (nonatomic, weak) id<gridDelegate> delegate;
+
 
 @end
