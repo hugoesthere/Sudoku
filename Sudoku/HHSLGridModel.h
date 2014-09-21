@@ -10,4 +10,6 @@
 
 @interface HHSLGridModel : NSObject
 
+- (int)getValueatRow: (int)row andColumn:(int)column;
+
 @end

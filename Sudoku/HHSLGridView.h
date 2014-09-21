@@ -9,15 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @class HHSLGridView;
-@protocol gridDelegate <NSObject>;
+@protocol gridDelegate
 
 -(void)buttonPressed:(HHSLGridView *)controller sender:(id)sender;
+//-(void)buttonNotPressed:(HHSLGridView *)controller sender:(id)sender;
 
 @end
 
 @interface HHSLGridView : UIView
 
-@property (nonatomic, weak) id<gridDelegate> delegate;
-
+@property(nonatomic, weak) id<gridDelegate> customDelegate;
+-(void)setCellValueGridView: (int)row :(int)column :(int)newValue;
 
 @end

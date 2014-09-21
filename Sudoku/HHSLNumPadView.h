@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class HHSLNumPadView;
+@protocol numPadDelegate
+
+-(void)numberSelected:(HHSLNumPadView *)controller number:(int)num;
+
+@end
+
 @interface HHSLNumPadView : UIView
+
+@property(nonatomic, weak) id<numPadDelegate> customNumDelegate;
 
 @end

@@ -9,11 +9,14 @@
 #import "HHSLViewController.h"
 #import "HHSLGridView.h"
 #import "HHSLNumPadView.h"
+//#import "HHSLGridModel.h"
 
 @interface HHSLViewController () {
     UIButton* _button;
-    UIView* _gridView;
-    UIView* _numPad;
+    HHSLGridView* _gridView;
+    HHSLNumPadView* _numPad;
+   // HHSLGridModel* _gridModel;
+    int _numSelected;
 }
 
 @end
@@ -32,7 +35,9 @@
     CGRect gridFrame = CGRectMake(gridX, gridY, gridSize, gridSize);
     
     // Instantiate _gridView and add it to the ViewController
+    //_gridModel = [HHSLGridModel alloc];
     _gridView = [[HHSLGridView alloc] initWithFrame:gridFrame];
+    _gridView.customDelegate = self;
     [self.view addSubview:_gridView];
     
     // Create num pad
@@ -44,13 +49,24 @@
     
     // Instantiate _numPad and add it to the ViewController
     _numPad = [[HHSLNumPadView alloc] initWithFrame:numPadFrame];
-    [self.view addSubview:_numPad];
+    _numPad.customNumDelegate = self;
+    _numSelected = 5;
 }
 
 - (void) buttonPressed:(HHSLGridView *)controller sender:(id)sender {
     int row = [sender tag]%10;
     int col = [sender tag]/10;
-    NSLog(@"Button in Column %d and Row %d was pressed", col, row);
+    NSLog(@"Button in Column %d and Row %d was pressed with num %d", col, row, _numSelected);
+    [self.view addSubview:_numPad];
+    [_gridView setCellValueGridView:row :col :_numSelected];
+}
+
+//- (void) buttonNotPressed:(HHSLGridView *)controller sender:(id)sender {
+//    [_numPad removeFromSuperview];
+//}
+
+- (void) numberSelected:(HHSLNumPadView *)controller number:(int)num {
+    _numSelected = num;
 }
 
 - (void)didReceiveMemoryWarning

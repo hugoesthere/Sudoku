@@ -73,6 +73,7 @@
     }
     NSString* numStr = [NSString stringWithFormat:@"%d", num];
     _numDisplay.text = numStr;
+    [self.customNumDelegate numberSelected:self number: num];
 }
 
 - (void)singleTappingRight:(UIGestureRecognizer *)recognizer
@@ -85,6 +86,7 @@
     }
     NSString* numStr = [NSString stringWithFormat:@"%d", num];
     _numDisplay.text = numStr;
+    [self.customNumDelegate numberSelected:self number: num];
 }
 
 @end

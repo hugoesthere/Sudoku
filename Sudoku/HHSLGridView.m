@@ -16,18 +16,6 @@
 
 @implementation HHSLGridView
 
-int initialGrid[9][9] = {
-    {7,0,0,4,2,0,0,0,9},
-    {0,0,9,5,0,0,0,0,4},
-    {0,2,0,6,9,0,5,0,0},
-    {6,5,0,0,0,0,4,3,0},
-    {0,8,0,0,0,6,0,0,7},
-    {0,1,0,0,4,5,6,0,0},
-    {0,0,0,8,6,0,0,0,2},
-    {3,4,0,9,0,0,1,0,0},
-    {8,0,0,3,0,2,7,4,0}
-};
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -37,6 +25,8 @@ int initialGrid[9][9] = {
         self.backgroundColor = [UIColor blackColor];
         CGFloat size = CGRectGetWidth(frame);
         CGFloat buttonSize = size/11.0;
+        
+        _arrayOfCells = [[NSMutableArray alloc] initWithCapacity:9];
         
         // Array for sudoku cells
         for (int i = 0; i < 9; ++i) {
@@ -57,20 +47,24 @@ int initialGrid[9][9] = {
                 // Initializing button & cell (which is a button) UI
                 CGRect buttonFrame = CGRectMake(x,y, buttonSize, buttonSize);
                 UIButton* button = [[UIButton alloc] initWithFrame:buttonFrame];
+                [button setEnabled:YES];
                 button.backgroundColor = [UIColor whiteColor];
                 button.tag = row + 10*column;
                 [self addSubview:button];
                 
                 // Highlight cell when clicked
-                [button addTarget:self action:@selector(pressed:) forControlEvents:UIControlEventTouchUpInside];
+                [button addTarget:self action:@selector(cellPressed:) forControlEvents:UIControlEventTouchUpInside];
+                //[button addTarget:self action:@selector(cellNotPressed:) forControlEvents:UIControlEventTouchDownRepeat];
                 [button setBackgroundImage:[self imageWithColor: [UIColor yellowColor]] forState:UIControlStateHighlighted];
                 
                 // Create cell title, which displays value of cell
-                int cellValue = initialGrid[column][row];
+                //int cellValue = initialGrid[column][row];
                 NSString *label = @"";
-                if (cellValue != 0) {
-                    label = [NSString stringWithFormat:@"%d", cellValue];
-                }
+                //if (cellValue != 0) {
+                //    label = [NSString stringWithFormat:@"%d", cellValue];
+                //    [button setEnabled:NO];
+                    
+                //}
                 
                 // UI for cell titles
                 [button setTitle:label forState:UIControlStateNormal];
@@ -86,18 +80,23 @@ int initialGrid[9][9] = {
     return self;
 }
 
-//- (void)buttonPressed:(id)sender
-//{
-//    int row = [sender tag]%10;
-//    int col = [sender tag]/10;
-//    NSLog(@"Button in Column %d and Row %d was pressed", col, row);
-//    
-//}
-
--(void)pressed: (id)sender
+-(void)setCellValueGridView: (int)row :(int)column :(int)newValue
 {
-    [self.delegate buttonPressed:self sender:sender];
+    UIButton* selectedButton = [[_arrayOfCells objectAtIndex:column] objectAtIndex:row];
+    NSString* label = [NSString stringWithFormat:@"%d", newValue];
+    [selectedButton setTitle:label forState:UIControlStateNormal];
+    [selectedButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
 }
+
+-(void)cellPressed: (id)sender
+{
+    [self.customDelegate buttonPressed:self sender:sender];
+}
+
+//-(void)cellNotPressed: (id)sender
+//{
+//    [self.customDelegate buttonNotPressed:self sender:sender];
+//}
 
 // Method from:
 // stackoverflow.com/questions/990976/how-to-create-a-colored-1x1-uiimage-on-the-iphone-dynamically
