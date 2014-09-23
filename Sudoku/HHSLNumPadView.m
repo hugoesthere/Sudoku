@@ -30,7 +30,7 @@
 
         // Initialize number picker display
         _numDisplay = [[UILabel alloc] initWithFrame:numDisplay];
-        _numDisplay.text = @"5";
+        _numDisplay.text = @"5";            // Default number picker value
         _numDisplay.textAlignment = NSTextAlignmentCenter;
         _numDisplay.font = [UIFont systemFontOfSize:75];
         _numDisplay.layer.borderColor = [UIColor blackColor].CGColor;
@@ -56,34 +56,42 @@
         [singleTapRight setNumberOfTapsRequired:1];
         [rightArrow addGestureRecognizer:singleTapRight];
         [self addSubview:rightArrow];
-        
-        
-        
     }
+    
     return self;
 }
 
+// If the left button is tapped, decrement the value displayed.
+// The numbers wrap around. Send the value displayed to the
+// ViewController via delegate.
 - (void)singleTappingLeft:(UIGestureRecognizer *)recognizer
 {
     NSInteger num = [_numDisplay.text integerValue];
+    
     if(num > 1) {
         num--;
     } else {
         num = 9;
     }
+    
     NSString* numStr = [NSString stringWithFormat:@"%d", num];
     _numDisplay.text = numStr;
     [self.customNumDelegate numberSelected:self number: num];
 }
 
+// If the right button is tapped, increment the value displayed.
+// The numbers wrap around. Send the value displayed to the
+// ViewController via delegate.
 - (void)singleTappingRight:(UIGestureRecognizer *)recognizer
 {
     NSInteger num = [_numDisplay.text integerValue];
+    
     if(num < 9) {
         num++;
     } else {
         num = 1;
     }
+    
     NSString* numStr = [NSString stringWithFormat:@"%d", num];
     _numDisplay.text = numStr;
     [self.customNumDelegate numberSelected:self number: num];

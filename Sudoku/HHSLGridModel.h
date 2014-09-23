@@ -11,5 +11,8 @@
 @interface HHSLGridModel : NSObject
 
 - (int)getValueatRow: (int)row andColumn:(int)column;
+- (NSMutableArray *)getInitialArray;
+- (bool)isConsistentAtRow: (int)row andColumn:(int)column for:(int)value;
+- (void)setValueAtRow: (int)row andColumn:(int)column to:(int)value;
 
 @end

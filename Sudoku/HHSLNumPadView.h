@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+// Create a delegate to send information from the number pad to the
+// controller
 @class HHSLNumPadView;
 @protocol numPadDelegate
 
--(void)numberSelected:(HHSLNumPadView *)controller number:(int)num;
+- (void)numberSelected:(HHSLNumPadView *)controller number:(int)num;
 
 @end
 
