@@ -8,6 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+// Delegate to send information to the ViewController
+@class HHSLGridView;
+@protocol gridDelegate
+
+- (void)buttonPressed:(HHSLGridView *)controller sender:(id)sender;
+
+@end
+
 @interface HHSLGridView : UIView
+
+@property(nonatomic, weak) id<gridDelegate> customDelegate;
+- (void)setCellValueGridView: (int)row :(int)column :(int)newValue;
+- (id)initWithFrame:(CGRect)frame andArray:(NSMutableArray *)initialGrid;
+
+
 
 @end

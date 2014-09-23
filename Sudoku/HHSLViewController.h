@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HHSLGridView.h"
+#import "HHSLNumPadView.h"
 
-@interface HHSLViewController : UIViewController
+
+@interface HHSLViewController : UIViewController <gridDelegate, numPadDelegate>
+
 
 @end
+
+
+

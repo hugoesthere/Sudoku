@@ -8,10 +8,15 @@
 
 #import "HHSLViewController.h"
 #import "HHSLGridView.h"
+#import "HHSLNumPadView.h"
+#import "HHSLGridModel.h"
 
 @interface HHSLViewController () {
-    UIButton* _button;
-    UIView* _gridView;
+    UIButton* _buttonSelected;
+    HHSLGridView* _gridView;
+    HHSLNumPadView* _numPad;
+    HHSLGridModel* _gridModel;
+    int _numSelected;
 }
 
 @end
@@ -24,15 +29,50 @@
     
     // Create grid frame
     CGRect frame = self.view.frame;
-    CGFloat x = CGRectGetWidth(frame)*.1;
-    CGFloat y = CGRectGetHeight(frame)*.1;
-    CGFloat size = MIN(CGRectGetWidth(frame), CGRectGetHeight(frame))*.80;
-    CGRect gridFrame = CGRectMake(x, y, size, size);
+    CGFloat gridX = CGRectGetWidth(frame)*.1;
+    CGFloat gridY = CGRectGetHeight(frame)*.1;
+    CGFloat gridSize = MIN(CGRectGetWidth(frame), CGRectGetHeight(frame))*.80;
+    CGRect gridFrame = CGRectMake(gridX, gridY, gridSize, gridSize);
     
     // Instantiate _gridView and add it to the ViewController
-    _gridView = [[HHSLGridView alloc] initWithFrame:gridFrame];
+    _gridModel = [HHSLGridModel alloc];
+    NSMutableArray* initialGrid = _gridModel.getInitialArray;
+    _gridView = [[HHSLGridView alloc] initWithFrame:gridFrame andArray:initialGrid];
+    _gridView.customDelegate = self;
     [self.view addSubview:_gridView];
     
+    // Create number pad
+    CGFloat numPadX = gridX;
+    CGFloat numPadY = gridY + gridSize + CGRectGetHeight(frame)*.1;
+    CGFloat numPadWidth = gridSize;
+    CGFloat numPadHeight = CGRectGetHeight(frame)*.15;
+    CGRect numPadFrame = CGRectMake(numPadX, numPadY, numPadWidth, numPadHeight);
+    
+    // Instantiate _numPad and add it to the ViewController
+    _numPad = [[HHSLNumPadView alloc] initWithFrame:numPadFrame];
+    _numPad.customNumDelegate = self;
+    _numSelected = 5;
+}
+
+// When a grid cell is pressed, change the button's value to the number displayed
+// on the number pad. If the value currently displayed is inconsistent, do nothing.
+- (void)buttonPressed:(HHSLGridView *)controller sender:(id)sender {
+    int row = [sender tag]%10;
+    int col = [sender tag]/10;
+    [self.view addSubview:_numPad];
+    _buttonSelected = (UIButton*)sender;
+    
+    // Check consistency
+    if ([_gridModel isConsistentAtRow:row andColumn:col for:_numSelected]) {
+        [_gridView setCellValueGridView:row :col :_numSelected];
+        [_gridModel setValueAtRow:row andColumn:col to:_numSelected];
+    }
+}
+
+// Delegate Function: Set the global variable _numSelected to the number displayed
+// on the number pad
+- (void)numberSelected:(HHSLNumPadView *)controller number:(int)num {
+    _numSelected = num;
 }
 
 - (void)didReceiveMemoryWarning
