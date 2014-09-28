@@ -58,7 +58,7 @@
                 
                 // Create cell title, which displays value of cell
                 NSNumber* nsCellValue = [[initialGrid objectAtIndex:column] objectAtIndex:row];
-                int cellValue = [nsCellValue integerValue];
+                int cellValue = [nsCellValue intValue];
                 NSString* label = @"";
                 
                 if (cellValue != 0) {
@@ -83,8 +83,15 @@
 // Sets newValue at given row and given column
 - (void)setCellValueGridView: (int)row :(int)column :(int)newValue
 {
+    
     UIButton* selectedButton = [[_arrayOfCells objectAtIndex:column] objectAtIndex:row];
-    NSString* label = [NSString stringWithFormat:@"%d", newValue];
+    NSString* label;
+    if(newValue == 0) {
+        label = @"";
+    }
+    else {
+       label = [@(newValue) stringValue];
+    }
     [selectedButton setTitle:label forState:UIControlStateNormal];
     [selectedButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
 }

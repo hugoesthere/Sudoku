@@ -39,19 +39,19 @@
 
 - (void)gridTest
 {
-    NSMutableArray *currentGrid = _gridModel.getInitialArray;
+    NSMutableArray *currentGrid = _gridModel.generateGrid;
     
     // Checks getValueatRowandColumn
     NSNumber* nsCellValue1 = [[currentGrid objectAtIndex:3] objectAtIndex:5];
-    int cellValue1 = [nsCellValue1 integerValue];
+    int cellValue1 = [nsCellValue1 intValue];
     XCTAssertEqual([_gridModel getValueatRow:3 andColumn:5], cellValue1, @"They are equal");
     
     NSNumber* nsCellValue2 = [[currentGrid objectAtIndex:3] objectAtIndex:5];
-    int cellValue2 = [nsCellValue2 integerValue];
+    int cellValue2 = [nsCellValue2 intValue];
     XCTAssertEqual([_gridModel getValueatRow:3 andColumn:5], cellValue2, @"They are equal");
     
     NSNumber* nsCellValue3 = [[currentGrid objectAtIndex:6] objectAtIndex:1];
-    int cellValue3 = [nsCellValue3 integerValue];
+    int cellValue3 = [nsCellValue3 intValue];
     XCTAssertEqual([_gridModel getValueatRow:6 andColumn:1], cellValue3, @"They are equal");
     
     // Checks isConsistentAtRowandColumn

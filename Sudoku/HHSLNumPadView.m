@@ -68,15 +68,15 @@
 {
     NSInteger num = [_numDisplay.text integerValue];
     
-    if(num > 1) {
+    if(num > 0) {
         num--;
     } else {
         num = 9;
     }
     
-    NSString* numStr = [NSString stringWithFormat:@"%d", num];
+    NSString* numStr = [@(num) stringValue];
     _numDisplay.text = numStr;
-    [self.customNumDelegate numberSelected:self number: num];
+    [self.customNumDelegate numberSelected:self number: (int)num];
 }
 
 // If the right button is tapped, increment the value displayed.
@@ -89,12 +89,14 @@
     if(num < 9) {
         num++;
     } else {
-        num = 1;
+        num = 0;
     }
     
-    NSString* numStr = [NSString stringWithFormat:@"%d", num];
+
+    NSString* numStr = [@(num) stringValue];
     _numDisplay.text = numStr;
-    [self.customNumDelegate numberSelected:self number: num];
+    
+    [self.customNumDelegate numberSelected:self number: (int)num];
 }
 
 @end

@@ -18,6 +18,7 @@
     UIView* _startGame;
     HHSLGridModel* _gridModel;
     int _numSelected;
+    CGRect _gridFrame;
 }
 
 @end
@@ -33,14 +34,12 @@
     CGFloat gridX = CGRectGetWidth(frame)*.1;
     CGFloat gridY = CGRectGetHeight(frame)*.1;
     CGFloat gridSize = MIN(CGRectGetWidth(frame), CGRectGetHeight(frame))*.80;
-    CGRect gridFrame = CGRectMake(gridX, gridY, gridSize, gridSize);
-    
-  
+    _gridFrame = CGRectMake(gridX, gridY, gridSize, gridSize);
     
     // Instantiate _gridView and add it to the ViewController
     _gridModel = [HHSLGridModel alloc];
     NSMutableArray* initialGrid = _gridModel.generateGrid;
-    _gridView = [[HHSLGridView alloc] initWithFrame:gridFrame andArray:initialGrid];
+    _gridView = [[HHSLGridView alloc] initWithFrame:_gridFrame andArray:initialGrid];
     _gridView.customDelegate = self;
     [self.view addSubview:_gridView];
     
@@ -58,37 +57,118 @@
     [self.view addSubview:_numPad];
     
     // Create new game button
-    CGFloat newGameX = CGRectGetWidth(frame)*.33;
-    CGFloat newGameY = numPadY + numPadHeight + CGRectGetHeight(frame)*.025;
     CGFloat newGameWidth = gridSize * .33;
-    CGFloat newGameHeight = CGRectGetHeight(frame)*.10;
-    CGRect newGameFrame = CGRectMake(newGameX, newGameY, newGameWidth, newGameHeight);
+    CGFloat newGameHeight = CGRectGetHeight(frame)*.05;
+    CGFloat newGameX = CGRectGetWidth(frame)*.5 - newGameWidth*.52;
+    CGFloat newGameY = numPadY + numPadHeight + CGRectGetHeight(frame)*.01;
     
-    _startGame = [[UIView alloc] initWithFrame:newGameFrame];
-    _startGame.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:_startGame];
+    CGRect newGameButtonFrame = CGRectMake(newGameX, newGameY, newGameWidth, newGameHeight);
+    UIButton* newGameButton = [[UIButton alloc] initWithFrame:newGameButtonFrame];
+    newGameButton.backgroundColor = [UIColor whiteColor];
+    newGameButton.layer.borderColor = [UIColor blackColor].CGColor;
+    newGameButton.layer.borderWidth = 3.0;
+    [newGameButton setTitle:@"Start Over" forState:UIControlStateNormal];
+    [newGameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:newGameButton];
     
+    [newGameButton addTarget:self action:@selector(startNewGame) forControlEvents:UIControlEventTouchUpInside];
+    [newGameButton setBackgroundImage:[self imageWithColor: [UIColor greenColor]] forState:UIControlStateHighlighted];
+    
+    // Create validate game button
+    CGFloat validateGameX = CGRectGetWidth(frame)*.5 - newGameWidth*.52;
+    CGFloat validateGameY = numPadY + numPadHeight + + newGameHeight + CGRectGetHeight(frame)*.015;
+    
+    CGRect validateGameButtonFrame = CGRectMake(validateGameX, validateGameY, newGameWidth, newGameHeight);
+    UIButton* validateGameButton = [[UIButton alloc] initWithFrame:validateGameButtonFrame];
+    validateGameButton.backgroundColor = [UIColor whiteColor];
+    validateGameButton.layer.borderColor = [UIColor blackColor].CGColor;
+    validateGameButton.layer.borderWidth = 3.0;
+    [validateGameButton setTitle:@"Validate Game" forState:UIControlStateNormal];
+    [validateGameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:validateGameButton];
+    
+    [validateGameButton addTarget:self action:@selector(validateGame) forControlEvents:UIControlEventTouchUpInside];
+    [validateGameButton setBackgroundImage:[self imageWithColor: [UIColor greenColor]] forState:UIControlStateHighlighted];
 }
 
 // When a grid cell is pressed, change the button's value to the number displayed
 // on the number pad. If the value currently displayed is inconsistent, do nothing.
 - (void)buttonPressed:(HHSLGridView *)controller sender:(id)sender {
-    int row = [sender tag]%10;
-    int col = [sender tag]/10;
+    int row = (int)[sender tag]%10;
+    int col = (int)[sender tag]/10;
+    
+    NSLog(@"For num: %d ROW %d, COL %d, value is %d",_numSelected, row, col, [_gridModel getValueatRow:row andColumn:col]);
 
     _buttonSelected = (UIButton*)sender;
     
     // Check consistency
-    if ([_gridModel isConsistentAtRow:row andColumn:col for:_numSelected]) {
+    if (_numSelected == 0) {
+        [_gridView setCellValueGridView:row :col :0];
+        [_gridModel setValueAtRow:row andColumn:col to:0];
+    } else if ([_gridModel isConsistentAtRow:row andColumn:col for:_numSelected]) {
         [_gridView setCellValueGridView:row :col :_numSelected];
         [_gridModel setValueAtRow:row andColumn:col to:_numSelected];
     }
+
+    [_gridModel printGrid];
 }
 
 // Delegate Function: Set the global variable _numSelected to the number displayed
 // on the number pad
 - (void)numberSelected:(HHSLNumPadView *)controller number:(int)num {
     _numSelected = num;
+}
+
+- (void)startNewGame {
+    NSMutableArray* initialGrid = _gridModel.generateGrid;
+    _gridView = [[HHSLGridView alloc] initWithFrame:_gridFrame andArray:initialGrid];
+    _gridView.customDelegate = self;
+    [self.view addSubview:_gridView];
+}
+
+- (void)validateGame {
+    bool won = true;
+    for (int i = 0; i < 9; i++) {
+        for(int j = 0; j < 9; j++) {
+            if([_gridModel getValueatRow:i andColumn:j] == 0){
+                won = false;
+                break;
+            }
+        }
+    }
+    
+    NSString* title = @"Result";
+    NSString* message;
+    if(won) {
+        message = @"You won!";
+    } else {
+        message = @"You tried... (and lost)";
+    }
+    
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:title
+                              message:message
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+    [alertView show];
+}
+
+// Creates UIImage to display on highlight
+// Method from:
+// stackoverflow.com/questions/990976/how-to-create-a-colored-1x1-uiimage-on-the-iphone-dynamically
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 50 , 50);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 - (void)didReceiveMemoryWarning

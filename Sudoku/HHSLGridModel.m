@@ -10,21 +10,13 @@
 
 @implementation HHSLGridModel
 
-int initialGrid[9][9] = {
-    {7,0,0,4,2,0,0,0,9},
-    {0,0,9,5,0,0,0,0,4},
-    {0,2,0,6,9,0,5,0,0},
-    {6,5,0,0,0,0,4,3,0},
-    {0,8,0,0,0,6,0,0,7},
-    {0,1,0,0,4,5,6,0,0},
-    {0,0,0,8,6,0,0,0,2},
-    {3,4,0,9,0,0,1,0,0},
-    {8,0,0,3,0,2,7,4,0}
-};
-
-
 
 NSMutableArray* _nsGrid;
+NSMutableArray* _initialNSGrid;
+
+- (void)printGrid {
+    NSLog(@"%@", _nsGrid);
+}
 
 - (NSMutableArray *)generateGrid {
     int chooseGridFile = arc4random_uniform(2);
@@ -60,12 +52,14 @@ NSMutableArray* _nsGrid;
     for (int i = 0; i < 9; i++) {
         for(int j = 0; j < 9; j++) {
             int num = [[gridString substringWithRange:NSMakeRange(charIndex, 1)] intValue];
+            NSLog(@"cell value: %d", num);
             NSNumber* nsNum = [NSNumber numberWithInt:num];
             [[_nsGrid objectAtIndex:i] insertObject:nsNum atIndex:j];
             charIndex++;
         }
     }
     
+    _initialNSGrid = _nsGrid;
     return _nsGrid;
     
 
@@ -74,7 +68,7 @@ NSMutableArray* _nsGrid;
 // Gets the initial values are a given row and column
 - (int)getValueatRow: (int)row andColumn:(int)column
 {
-    return initialGrid[column][row];
+    return [[[_nsGrid objectAtIndex:column] objectAtIndex:row] intValue];
 }
 
 
@@ -82,14 +76,14 @@ NSMutableArray* _nsGrid;
 - (void)setValueAtRow: (int)row andColumn:(int)column to:(int)value
 {
     NSNumber* numToInput = [NSNumber numberWithInt:value];
-    [[_nsGrid objectAtIndex:column] insertObject:numToInput atIndex:row];
+    [[_nsGrid objectAtIndex:column] replaceObjectAtIndex:row withObject:numToInput];
 }
 
 // Checks whether the cell at a given row and column is mutable based
 // off the initialGrid
 - (bool)isMutableatRow: (int)row andColumn:(int)column
 {
-    return (initialGrid[column][row] == 0);
+    return ([[[_initialNSGrid objectAtIndex:column] objectAtIndex:row] intValue] == 0);
 }
 
 // Checks if the value is consistent at a given row and column
@@ -98,8 +92,9 @@ NSMutableArray* _nsGrid;
     // For row
     for (int i = 0; i < 9; i++) {
         NSNumber* nsCellValue = [[_nsGrid objectAtIndex:column] objectAtIndex:i];
-        int cellValue = [nsCellValue integerValue];
+        int cellValue = [nsCellValue intValue];
         if (cellValue == value) {
+            NSLog(@"row: %d, column: %d, row is returning false. value is %d",i, column, [self getValueatRow:i andColumn:column]);
             return false;
         }
     }
@@ -107,8 +102,9 @@ NSMutableArray* _nsGrid;
     // For column
     for (int i = 0; i < 9; i++) {
         NSNumber* nsCellValue = [[_nsGrid objectAtIndex:i] objectAtIndex:row];
-        int cellValue = [nsCellValue integerValue];
+        int cellValue = [nsCellValue intValue];
         if (cellValue == value) {
+            NSLog(@"row: %d, column: %d, column is returning false. value is %d",row, i, [self getValueatRow:row andColumn:i]);
             return false;
         }
     }
@@ -121,8 +117,9 @@ NSMutableArray* _nsGrid;
     for(int i = leftCol; i <= rightCol; i++) {
         for(int j = upperRow; j <= lowerRow; j++) {
             NSNumber* nsCellValue = [[_nsGrid objectAtIndex:i] objectAtIndex:j];
-            int cellValue = [nsCellValue integerValue];
+            int cellValue = [nsCellValue intValue];
             if(cellValue == value) {
+                NSLog(@"row: %d, column: %d, 3x3 is returning false. value is %d",j, i, [self getValueatRow:j andColumn:i]);
                 return false;
             }
         }
