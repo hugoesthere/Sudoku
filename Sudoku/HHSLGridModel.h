@@ -14,5 +14,5 @@
 - (NSMutableArray *)generateGrid;
 - (bool)isConsistentAtRow: (int)row andColumn:(int)column for:(int)value;
 - (void)setValueAtRow: (int)row andColumn:(int)column to:(int)value;
-- (void)printGrid;
+
 @end

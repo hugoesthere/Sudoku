@@ -36,6 +36,12 @@
     CGFloat gridSize = MIN(CGRectGetWidth(frame), CGRectGetHeight(frame))*.80;
     _gridFrame = CGRectMake(gridX, gridY, gridSize, gridSize);
     
+    //self.view.backgroundColor = [UIColor blueColor];
+    // Set Background
+    UIImageView* background = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame))];
+    [background setImage:[UIImage imageNamed:@"green_background.jpg"]];
+    [self.view addSubview:background];
+    
     // Instantiate _gridView and add it to the ViewController
     _gridModel = [HHSLGridModel alloc];
     NSMutableArray* initialGrid = _gridModel.generateGrid;
@@ -64,9 +70,12 @@
     
     CGRect newGameButtonFrame = CGRectMake(newGameX, newGameY, newGameWidth, newGameHeight);
     UIButton* newGameButton = [[UIButton alloc] initWithFrame:newGameButtonFrame];
+    [newGameButton setImage:[UIImage imageNamed:@"blue_background.jpg"] forState:UIControlStateNormal];
     newGameButton.backgroundColor = [UIColor whiteColor];
     newGameButton.layer.borderColor = [UIColor blackColor].CGColor;
     newGameButton.layer.borderWidth = 3.0;
+    newGameButton.layer.cornerRadius = 10.0;
+    newGameButton.layer.masksToBounds = YES;
     [newGameButton setTitle:@"Start Over" forState:UIControlStateNormal];
     [newGameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:newGameButton];
@@ -83,6 +92,8 @@
     validateGameButton.backgroundColor = [UIColor whiteColor];
     validateGameButton.layer.borderColor = [UIColor blackColor].CGColor;
     validateGameButton.layer.borderWidth = 3.0;
+    validateGameButton.layer.cornerRadius = 10.0;
+    validateGameButton.layer.masksToBounds = YES;
     [validateGameButton setTitle:@"Validate Game" forState:UIControlStateNormal];
     [validateGameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:validateGameButton];
@@ -97,7 +108,6 @@
     int row = (int)[sender tag]%10;
     int col = (int)[sender tag]/10;
     
-    NSLog(@"For num: %d ROW %d, COL %d, value is %d",_numSelected, row, col, [_gridModel getValueatRow:row andColumn:col]);
 
     _buttonSelected = (UIButton*)sender;
     
@@ -110,7 +120,7 @@
         [_gridModel setValueAtRow:row andColumn:col to:_numSelected];
     }
 
-    [_gridModel printGrid];
+
 }
 
 // Delegate Function: Set the global variable _numSelected to the number displayed

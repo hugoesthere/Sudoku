@@ -7,6 +7,8 @@
 //
 
 #import "HHSLNumPadView.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
 
 @interface HHSLNumPadView () {
@@ -30,11 +32,14 @@
 
         // Initialize number picker display
         _numDisplay = [[UILabel alloc] initWithFrame:numDisplay];
+        _numDisplay.backgroundColor = [UIColor whiteColor];
         _numDisplay.text = @"5";            // Default number picker value
         _numDisplay.textAlignment = NSTextAlignmentCenter;
         _numDisplay.font = [UIFont systemFontOfSize:75];
         _numDisplay.layer.borderColor = [UIColor blackColor].CGColor;
         _numDisplay.layer.borderWidth = 3.0;
+        _numDisplay.layer.cornerRadius = 15.0;
+        _numDisplay.layer.masksToBounds = YES;
         [self addSubview:_numDisplay];
         
         // Create left arrow button as a clickable UIImageView
@@ -61,6 +66,46 @@
     return self;
 }
 
+- (void)numPadAnimation:(UILabel*)numLabel from:(int)leftOrRight;
+{
+    
+    CATransition* animation = [CATransition animation];
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    animation.type = kCATransitionMoveIn;
+    
+    //left == 0, right == 1
+    if(leftOrRight == 0) {
+        animation.subtype = kCATransitionFromRight;
+    } else {
+        animation.subtype = kCATransitionFromLeft;
+    }
+    
+    animation.duration = 0.5;
+    [numLabel.layer addAnimation:animation forKey:@"kCATransitionFade"];
+    
+    
+}
+
+- (void)playClickfor:(int)leftOrRight
+{
+    
+    //left == 0, right == 1
+    NSString* fileName;
+    if (leftOrRight == 0) {
+        fileName = @"ClickLeftSfx";
+    } else {
+        fileName = @"ClickRightSfx";
+        
+    }
+    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:fileName ofType: @"wav"];
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
+    
+    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error: nil];
+    
+    self.player = newPlayer;
+    [self.player play];
+}
+
 // If the left button is tapped, decrement the value displayed.
 // The numbers wrap around. Send the value displayed to the
 // ViewController via delegate.
@@ -74,7 +119,10 @@
         num = 9;
     }
     
+
     NSString* numStr = [@(num) stringValue];
+    [self numPadAnimation:_numDisplay from:0];
+    [self playClickfor:0];
     _numDisplay.text = numStr;
     [self.customNumDelegate numberSelected:self number: (int)num];
 }
@@ -94,6 +142,8 @@
     
 
     NSString* numStr = [@(num) stringValue];
+    [self numPadAnimation:_numDisplay from:1];
+    [self playClickfor:1];
     _numDisplay.text = numStr;
     
     [self.customNumDelegate numberSelected:self number: (int)num];

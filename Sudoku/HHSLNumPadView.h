@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
 // Create a delegate to send information from the number pad to the
 // controller
@@ -19,6 +21,7 @@
 
 @interface HHSLNumPadView : UIView
 
+@property (nonatomic, retain) AVAudioPlayer *player;
 @property(nonatomic, weak) id<numPadDelegate> customNumDelegate;
 
 @end

@@ -26,6 +26,10 @@
 		F651AED519D5E3AB00888062 /* grid2.txt in Resources */ = {isa = PBXBuildFile; fileRef = F651AED319D5E3AB00888062 /* grid2.txt */; };
 		F684DEA719CCDEE9008E6AE8 /* HHSLGridModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F684DEA619CCDEE9008E6AE8 /* HHSLGridModel.m */; };
 		F684DEAA19CCDFE2008E6AE8 /* HHSLNumPadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F684DEA919CCDFE2008E6AE8 /* HHSLNumPadView.m */; };
+		F6D8694319D9068200E4D1D3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D8694219D9068200E4D1D3 /* AudioToolbox.framework */; };
+		F6D8694519D9086F00E4D1D3 /* SudokuCellSfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = F6D8694419D9086F00E4D1D3 /* SudokuCellSfx.wav */; };
+		F6D8694819D911FB00E4D1D3 /* ClickLeftSfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = F6D8694619D911FB00E4D1D3 /* ClickLeftSfx.wav */; };
+		F6D8694919D911FB00E4D1D3 /* ClickRightSfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = F6D8694719D911FB00E4D1D3 /* ClickRightSfx.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +70,10 @@
 		F684DEA619CCDEE9008E6AE8 /* HHSLGridModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSLGridModel.m; sourceTree = "<group>"; };
 		F684DEA819CCDFE2008E6AE8 /* HHSLNumPadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSLNumPadView.h; sourceTree = "<group>"; };
 		F684DEA919CCDFE2008E6AE8 /* HHSLNumPadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSLNumPadView.m; sourceTree = "<group>"; };
+		F6D8694219D9068200E4D1D3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F6D8694419D9086F00E4D1D3 /* SudokuCellSfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = SudokuCellSfx.wav; path = ../../../../../../Downloads/SudokuCellSfx.wav; sourceTree = "<group>"; };
+		F6D8694619D911FB00E4D1D3 /* ClickLeftSfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ClickLeftSfx.wav; path = ../../../../../../Downloads/ClickLeftSfx.wav; sourceTree = "<group>"; };
+		F6D8694719D911FB00E4D1D3 /* ClickRightSfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ClickRightSfx.wav; path = ../../../../../../Downloads/ClickRightSfx.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6D8694319D9068200E4D1D3 /* AudioToolbox.framework in Frameworks */,
 				F624824719CA3A92000646B7 /* CoreGraphics.framework in Frameworks */,
 				F624824919CA3A92000646B7 /* UIKit.framework in Frameworks */,
 				F624824519CA3A92000646B7 /* Foundation.framework in Frameworks */,
@@ -114,6 +123,7 @@
 		F624824319CA3A92000646B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F6D8694219D9068200E4D1D3 /* AudioToolbox.framework */,
 				F624824419CA3A92000646B7 /* Foundation.framework */,
 				F624824619CA3A92000646B7 /* CoreGraphics.framework */,
 				F624824819CA3A92000646B7 /* UIKit.framework */,
@@ -145,6 +155,9 @@
 		F624824B19CA3A92000646B7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F6D8694619D911FB00E4D1D3 /* ClickLeftSfx.wav */,
+				F6D8694719D911FB00E4D1D3 /* ClickRightSfx.wav */,
+				F6D8694419D9086F00E4D1D3 /* SudokuCellSfx.wav */,
 				F651AED219D5E3AB00888062 /* grid1.txt */,
 				F651AED319D5E3AB00888062 /* grid2.txt */,
 				F624824C19CA3A92000646B7 /* Sudoku-Info.plist */,
@@ -253,6 +266,9 @@
 				F624825D19CA3A92000646B7 /* Images.xcassets in Resources */,
 				F624824F19CA3A92000646B7 /* InfoPlist.strings in Resources */,
 				F651AED419D5E3AB00888062 /* grid1.txt in Resources */,
+				F6D8694519D9086F00E4D1D3 /* SudokuCellSfx.wav in Resources */,
+				F6D8694919D911FB00E4D1D3 /* ClickRightSfx.wav in Resources */,
+				F6D8694819D911FB00E4D1D3 /* ClickLeftSfx.wav in Resources */,
 				F624825819CA3A92000646B7 /* Main.storyboard in Resources */,
 				F651AED519D5E3AB00888062 /* grid2.txt in Resources */,
 			);

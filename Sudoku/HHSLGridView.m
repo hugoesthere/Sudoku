@@ -7,6 +7,8 @@
 //
 
 #import "HHSLGridView.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface HHSLGridView () {
     NSMutableArray* _arrayOfCells;
@@ -100,7 +102,20 @@
 // ViewController
 - (void)cellPressed: (id)sender
 {
+    [self playClick];
+    
     [self.customDelegate buttonPressed:self sender:sender];
+}
+
+- (void)playClick
+{
+    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource: @"SudokuCellSfx" ofType: @"wav"];
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
+    
+    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error: nil];
+    
+    self.player = newPlayer;
+    [self.player play];
 }
 
 // Creates UIImage to display on highlight
