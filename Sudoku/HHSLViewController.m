@@ -13,6 +13,8 @@
 
 @interface HHSLViewController () {
     UIButton* _buttonSelected;
+    UIButton* _newGameButton;
+    UIButton* _validateGameButton;
     HHSLGridView* _gridView;
     HHSLNumPadView* _numPad;
     UIView* _startGame;
@@ -60,7 +62,7 @@
     _numPad = [[HHSLNumPadView alloc] initWithFrame:numPadFrame];
     _numPad.customNumDelegate = self;
     _numSelected = 5;
-    [self.view addSubview:_numPad];
+    //[self.view addSubview:_numPad];
     
     // Create new game button
     CGFloat newGameWidth = gridSize * .33;
@@ -69,42 +71,47 @@
     CGFloat newGameY = numPadY + numPadHeight + CGRectGetHeight(frame)*.01;
     
     CGRect newGameButtonFrame = CGRectMake(newGameX, newGameY, newGameWidth, newGameHeight);
-    UIButton* newGameButton = [[UIButton alloc] initWithFrame:newGameButtonFrame];
-    [newGameButton setImage:[UIImage imageNamed:@"blue_background.jpg"] forState:UIControlStateNormal];
-    newGameButton.backgroundColor = [UIColor whiteColor];
-    newGameButton.layer.borderColor = [UIColor blackColor].CGColor;
-    newGameButton.layer.borderWidth = 3.0;
-    newGameButton.layer.cornerRadius = 10.0;
-    newGameButton.layer.masksToBounds = YES;
-    [newGameButton setTitle:@"Start Over" forState:UIControlStateNormal];
-    [newGameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:newGameButton];
+    _newGameButton = [[UIButton alloc] initWithFrame:newGameButtonFrame];
+    [_newGameButton setImage:[UIImage imageNamed:@"start over 2.png"] forState:UIControlStateNormal];
+//    newGameButton.backgroundColor = [UIColor whiteColor];
+//    newGameButton.layer.borderColor = [UIColor blackColor].CGColor;
+//    newGameButton.layer.borderWidth = 3.0;
+//    newGameButton.layer.cornerRadius = 10.0;
+//    newGameButton.layer.masksToBounds = YES;
+//    [newGameButton setTitle:@"Start Over" forState:UIControlStateNormal];
+//    [newGameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    //[self.view addSubview:newGameButton];
     
-    [newGameButton addTarget:self action:@selector(startNewGame) forControlEvents:UIControlEventTouchUpInside];
-    [newGameButton setBackgroundImage:[self imageWithColor: [UIColor greenColor]] forState:UIControlStateHighlighted];
+    [_newGameButton addTarget:self action:@selector(startNewGame) forControlEvents:UIControlEventTouchUpInside];
+    [_newGameButton setBackgroundImage:[self imageWithColor: [UIColor greenColor]] forState:UIControlStateHighlighted];
     
     // Create validate game button
     CGFloat validateGameX = CGRectGetWidth(frame)*.5 - newGameWidth*.52;
     CGFloat validateGameY = numPadY + numPadHeight + + newGameHeight + CGRectGetHeight(frame)*.015;
     
     CGRect validateGameButtonFrame = CGRectMake(validateGameX, validateGameY, newGameWidth, newGameHeight);
-    UIButton* validateGameButton = [[UIButton alloc] initWithFrame:validateGameButtonFrame];
-    validateGameButton.backgroundColor = [UIColor whiteColor];
-    validateGameButton.layer.borderColor = [UIColor blackColor].CGColor;
-    validateGameButton.layer.borderWidth = 3.0;
-    validateGameButton.layer.cornerRadius = 10.0;
-    validateGameButton.layer.masksToBounds = YES;
-    [validateGameButton setTitle:@"Validate Game" forState:UIControlStateNormal];
-    [validateGameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:validateGameButton];
+    _validateGameButton = [[UIButton alloc] initWithFrame:validateGameButtonFrame];
+    [_validateGameButton setImage:[UIImage imageNamed:@"validate game.png"] forState:UIControlStateNormal];
+//    validateGameButton.backgroundColor = [UIColor whiteColor];
+//    validateGameButton.layer.borderColor = [UIColor blackColor].CGColor;
+//    validateGameButton.layer.borderWidth = 3.0;
+//    validateGameButton.layer.cornerRadius = 10.0;
+//    validateGameButton.layer.masksToBounds = YES;
+//    [validateGameButton setTitle:@"Validate Game" forState:UIControlStateNormal];
+//    [validateGameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    //[self.view addSubview:validateGameButton];
     
-    [validateGameButton addTarget:self action:@selector(validateGame) forControlEvents:UIControlEventTouchUpInside];
-    [validateGameButton setBackgroundImage:[self imageWithColor: [UIColor greenColor]] forState:UIControlStateHighlighted];
+    [_validateGameButton addTarget:self action:@selector(validateGame) forControlEvents:UIControlEventTouchUpInside];
+    [_validateGameButton setBackgroundImage:[self imageWithColor: [UIColor greenColor]] forState:UIControlStateHighlighted];
 }
 
 // When a grid cell is pressed, change the button's value to the number displayed
 // on the number pad. If the value currently displayed is inconsistent, do nothing.
 - (void)buttonPressed:(HHSLGridView *)controller sender:(id)sender {
+    [self.view addSubview:_numPad];
+    [self.view addSubview:_newGameButton];
+    [self.view addSubview:_validateGameButton];
+    
     int row = (int)[sender tag]%10;
     int col = (int)[sender tag]/10;
     

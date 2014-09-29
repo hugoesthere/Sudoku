@@ -129,7 +129,8 @@
     CGContextSetFillColorWithColor(context, [color CGColor]);
     CGContextFillRect(context, rect);
     
-    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    //UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage* image = [UIImage imageNamed:@"boop.png"];
     UIGraphicsEndImageContext();
     
     return image;

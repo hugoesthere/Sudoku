@@ -25,27 +25,30 @@
     
     if (self) {
         // Set dimensions for number picker display
-        CGFloat frameWidth = CGRectGetWidth(frame);
+        CGFloat frameWidth = CGRectGetWidth(frame)*.9;
         CGFloat frameHeight = CGRectGetHeight(frame);
-        CGFloat numDisplayX = frameWidth * .33;
+        CGFloat numDisplayX = frameWidth * .4;
         CGRect numDisplay = CGRectMake(numDisplayX, 0, numDisplayX, frameHeight);
 
         // Initialize number picker display
         _numDisplay = [[UILabel alloc] initWithFrame:numDisplay];
         _numDisplay.backgroundColor = [UIColor whiteColor];
         _numDisplay.text = @"5";            // Default number picker value
-        _numDisplay.textAlignment = NSTextAlignmentCenter;
-        _numDisplay.font = [UIFont systemFontOfSize:75];
-        _numDisplay.layer.borderColor = [UIColor blackColor].CGColor;
-        _numDisplay.layer.borderWidth = 3.0;
-        _numDisplay.layer.cornerRadius = 15.0;
-        _numDisplay.layer.masksToBounds = YES;
+        UIImage *image = [UIImage imageNamed:@"5.png"];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        [_numDisplay addSubview:imageView];
+        //_numDisplay.textAlignment = NSTextAlignmentCenter;
+        //_numDisplay.font = [UIFont systemFontOfSize:75];
+        //_numDisplay.layer.borderColor = [UIColor blackColor].CGColor;
+        //_numDisplay.layer.borderWidth = 3.0;
+        //_numDisplay.layer.cornerRadius = 15.0;
+        //_numDisplay.layer.masksToBounds = YES;
         [self addSubview:_numDisplay];
         
         // Create left arrow button as a clickable UIImageView
         // Taken from: http://stackoverflow.com/questions/11330544/uiimageview-as-button
         UIImageView* leftArrow = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, numDisplayX, frameHeight)];
-        [leftArrow setImage:[UIImage imageNamed:@"green traingle left.png"]];
+        [leftArrow setImage:[UIImage imageNamed:@"paint left arrow.png"]];
         [leftArrow setUserInteractionEnabled:YES];
         UITapGestureRecognizer* singleTapLeft = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTappingLeft:)];
         [singleTapLeft setNumberOfTapsRequired:1];
@@ -55,7 +58,7 @@
         // Create right arrow button as a clickable UIImageVIew
         CGFloat rightArrowX = frameWidth * .66;
         UIImageView* rightArrow = [[UIImageView alloc] initWithFrame:CGRectMake(rightArrowX, 0, numDisplayX, frameHeight)];
-        [rightArrow setImage:[UIImage imageNamed:@"green triangle right.png"]];
+        [rightArrow setImage:[UIImage imageNamed:@"paint right arrow.png"]];
         [rightArrow setUserInteractionEnabled:YES];
         UITapGestureRecognizer* singleTapRight = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTappingRight:)];
         [singleTapRight setNumberOfTapsRequired:1];
@@ -118,11 +121,19 @@
     } else {
         num = 9;
     }
+
+    NSString* imageName = [NSString stringWithFormat:@"%ld.png",(long)num];
+    NSLog(@"%ld", (long)num);
+    NSLog(@"%@", imageName);
+    
+    UIImage *image = [UIImage imageNamed:imageName];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     
 
     NSString* numStr = [@(num) stringValue];
     [self numPadAnimation:_numDisplay from:0];
     [self playClickfor:0];
+    [_numDisplay addSubview:imageView];
     _numDisplay.text = numStr;
     [self.customNumDelegate numberSelected:self number: (int)num];
 }
@@ -139,13 +150,18 @@
     } else {
         num = 0;
     }
+    NSString* imageName = [NSString stringWithFormat:@"%ld.png",(long)num];
+    NSLog(@"%ld", (long)num);
+    NSLog(@"%@", imageName);
     
+    UIImage *image = [UIImage imageNamed:imageName];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
 
     NSString* numStr = [@(num) stringValue];
     [self numPadAnimation:_numDisplay from:1];
     [self playClickfor:1];
+    [_numDisplay addSubview:imageView];
     _numDisplay.text = numStr;
-    
     [self.customNumDelegate numberSelected:self number: (int)num];
 }
 
