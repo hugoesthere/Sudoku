@@ -7,6 +7,8 @@
 //
 
 #import "HHSLGridView.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface HHSLGridView () {
     NSMutableArray* _arrayOfCells;
@@ -58,7 +60,7 @@
                 
                 // Create cell title, which displays value of cell
                 NSNumber* nsCellValue = [[initialGrid objectAtIndex:column] objectAtIndex:row];
-                int cellValue = [nsCellValue integerValue];
+                int cellValue = [nsCellValue intValue];
                 NSString* label = @"";
                 
                 if (cellValue != 0) {
@@ -84,21 +86,42 @@
 - (void)setCellValueGridView: (int)row :(int)column :(int)newValue
 {
     UIButton* selectedButton = [[_arrayOfCells objectAtIndex:column] objectAtIndex:row];
-    NSString* label = [NSString stringWithFormat:@"%d", newValue];
+    NSString* label;
+    
+    if(newValue == 0) {
+        label = @"";
+    }
+    else {
+       label = [@(newValue) stringValue];
+    }
+    
     [selectedButton setTitle:label forState:UIControlStateNormal];
     [selectedButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
 }
 
-// If a grid cell is pressed, send information about which button was pressed to the
-// ViewController
+// If a grid cell is pressed, send information about which
+// button was pressed to the ViewController
 - (void)cellPressed: (id)sender
 {
+    [self playClick];
     [self.customDelegate buttonPressed:self sender:sender];
+}
+
+// Taken from: http://stackoverflow.com/questions/11525942/play-audio-ios-objective-c
+- (void)playClick
+{
+    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource: @"SudokuCellSfx" ofType: @"wav"];
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
+    
+    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error: nil];
+    
+    self.player = newPlayer;
+    [self.player play];
 }
 
 // Creates UIImage to display on highlight
 // Method from:
-// stackoverflow.com/questions/990976/how-to-create-a-colored-1x1-uiimage-on-the-iphone-dynamically
+// http://stackoverflow.com/questions/990976/how-to-create-a-colored-1x1-uiimage-on-the-iphone-dynamically
 - (UIImage *)imageWithColor:(UIColor *)color {
     CGRect rect = CGRectMake(0, 0, 50 , 50);
     UIGraphicsBeginImageContext(rect.size);
@@ -107,7 +130,7 @@
     CGContextSetFillColorWithColor(context, [color CGColor]);
     CGContextFillRect(context, rect);
     
-    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage* image = [UIImage imageNamed:@"boop.png"];
     UIGraphicsEndImageContext();
     
     return image;

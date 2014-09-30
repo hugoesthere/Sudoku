@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
 // Delegate to send information to the ViewController
 @class HHSLGridView;
@@ -17,6 +19,8 @@
 @end
 
 @interface HHSLGridView : UIView
+
+@property (nonatomic, retain) AVAudioPlayer *player;
 
 @property(nonatomic, weak) id<gridDelegate> customDelegate;
 - (void)setCellValueGridView: (int)row :(int)column :(int)newValue;

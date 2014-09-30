@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "HHSLGridView.h"
 #import "HHSLNumPadView.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 
 @interface HHSLViewController : UIViewController <gridDelegate, numPadDelegate>
 
+@property (nonatomic, retain) AVAudioPlayer *player;
 
 @end
 
