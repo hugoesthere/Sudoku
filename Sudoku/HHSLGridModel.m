@@ -14,9 +14,9 @@
 NSMutableArray* _nsGrid;
 NSMutableArray* _initialNSGrid;
 
-
-
+// Generates the grid numbers by randomly selecting a line from either file
 - (NSMutableArray *)generateGrid {
+    // Picks a file
     int chooseGridFile = arc4random_uniform(2);
     int numGrids;
     
@@ -24,43 +24,41 @@ NSMutableArray* _initialNSGrid;
     
     if (chooseGridFile == 0) {
         fileName = @"grid1";
-        numGrids = 30000;
+        numGrids = 30000;       // Number of lines in grid1.txt
     } else {
         fileName = @"grid2";
-        numGrids = 30001;
+        numGrids = 30001;       // Number of lines in grid2.txt
     }
     
     NSString* path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
     NSError* error;
     NSString* readString = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
-    int chooseGrid = arc4random_uniform(numGrids);
     
+    // Picks a line from the file
+    int chooseGrid = arc4random_uniform(numGrids);
     NSString *gridString = [[readString componentsSeparatedByString:@"\n"] objectAtIndex:chooseGrid];
     
-    //NSLog(@"chose grid %@", gridString);
-    
+    // Creates _nsGrid to hold the numbers in the grid
     _nsGrid = [[NSMutableArray alloc] initWithCapacity:9];
     for (int i = 0; i < 9; ++i) {
         NSMutableArray* cellsInColumn = [[NSMutableArray alloc] initWithCapacity:9];
         [_nsGrid insertObject:cellsInColumn atIndex:i];
     }
     
-    // Fill in the values from the static 2D array
+    // Fill the _nsGrid with values
     NSUInteger charIndex = 0;
     for (int i = 0; i < 9; i++) {
         for(int j = 0; j < 9; j++) {
             int num = [[gridString substringWithRange:NSMakeRange(charIndex, 1)] intValue];
-            //NSLog(@"cell value: %d", num);
             NSNumber* nsNum = [NSNumber numberWithInt:num];
             [[_nsGrid objectAtIndex:i] insertObject:nsNum atIndex:j];
             charIndex++;
         }
     }
     
+    // Set _initialNSGrid to keep track of the initial values of the grid
     _initialNSGrid = _nsGrid;
     return _nsGrid;
-    
-
 }
 
 // Gets the initial values are a given row and column
@@ -92,7 +90,6 @@ NSMutableArray* _initialNSGrid;
         NSNumber* nsCellValue = [[_nsGrid objectAtIndex:column] objectAtIndex:i];
         int cellValue = [nsCellValue intValue];
         if (cellValue == value) {
-            //NSLog(@"row: %d, column: %d, row is returning false. value is %d",i, column, [self getValueatRow:i andColumn:column]);
             return false;
         }
     }
@@ -102,7 +99,6 @@ NSMutableArray* _initialNSGrid;
         NSNumber* nsCellValue = [[_nsGrid objectAtIndex:i] objectAtIndex:row];
         int cellValue = [nsCellValue intValue];
         if (cellValue == value) {
-            //NSLog(@"row: %d, column: %d, column is returning false. value is %d",row, i, [self getValueatRow:row andColumn:i]);
             return false;
         }
     }
@@ -117,7 +113,6 @@ NSMutableArray* _initialNSGrid;
             NSNumber* nsCellValue = [[_nsGrid objectAtIndex:i] objectAtIndex:j];
             int cellValue = [nsCellValue intValue];
             if(cellValue == value) {
-                //NSLog(@"row: %d, column: %d, 3x3 is returning false. value is %d",j, i, [self getValueatRow:j andColumn:i]);
                 return false;
             }
         }

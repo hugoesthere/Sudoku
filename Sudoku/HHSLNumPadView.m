@@ -37,12 +37,6 @@
         UIImage *image = [UIImage imageNamed:@"5.png"];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         [_numDisplay addSubview:imageView];
-        //_numDisplay.textAlignment = NSTextAlignmentCenter;
-        //_numDisplay.font = [UIFont systemFontOfSize:75];
-        //_numDisplay.layer.borderColor = [UIColor blackColor].CGColor;
-        //_numDisplay.layer.borderWidth = 3.0;
-        //_numDisplay.layer.cornerRadius = 15.0;
-        //_numDisplay.layer.masksToBounds = YES;
         [self addSubview:_numDisplay];
         
         // Create left arrow button as a clickable UIImageView
@@ -69,6 +63,7 @@
     return self;
 }
 
+// Creates the sliding animation for the number pad
 - (void)numPadAnimation:(UILabel*)numLabel from:(int)leftOrRight;
 {
     
@@ -76,7 +71,8 @@
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     animation.type = kCATransitionMoveIn;
     
-    //left == 0, right == 1
+    // If left arrow is selected, use transition from right
+    // Otherwise, use transition from left
     if(leftOrRight == 0) {
         animation.subtype = kCATransitionFromRight;
     } else {
@@ -89,10 +85,11 @@
     
 }
 
+// Taken from: http://stackoverflow.com/questions/11525942/play-audio-ios-objective-c
 - (void)playClickfor:(int)leftOrRight
 {
-    
-    //left == 0, right == 1
+    // Selects the appropriate file depending on which arrow was clicked
+    // Left is 0. Right otherwise
     NSString* fileName;
     if (leftOrRight == 0) {
         fileName = @"ClickLeftSfx";
@@ -121,7 +118,8 @@
     } else {
         num = 9;
     }
-
+    
+    // Used to select the desired file name
     NSString* imageName = [NSString stringWithFormat:@"%ld.png",(long)num];
     NSLog(@"%ld", (long)num);
     NSLog(@"%@", imageName);
@@ -129,7 +127,8 @@
     UIImage *image = [UIImage imageNamed:imageName];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     
-
+    // Triggers effects (sound and animation).
+    // Also calls on delegate class's function to send information to ViewController
     NSString* numStr = [@(num) stringValue];
     [self numPadAnimation:_numDisplay from:0];
     [self playClickfor:0];
@@ -150,6 +149,8 @@
     } else {
         num = 0;
     }
+    
+    // Used to select the desired file name
     NSString* imageName = [NSString stringWithFormat:@"%ld.png",(long)num];
     NSLog(@"%ld", (long)num);
     NSLog(@"%@", imageName);
@@ -157,6 +158,8 @@
     UIImage *image = [UIImage imageNamed:imageName];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
 
+    // Triggers effects (sound and animation).
+    // Also calls on delegate class's function to send information to ViewController
     NSString* numStr = [@(num) stringValue];
     [self numPadAnimation:_numDisplay from:1];
     [self playClickfor:1];
