@@ -92,7 +92,7 @@
     // Left is 0. Right otherwise
     NSString* fileName;
     if (leftOrRight == 0) {
-        fileName = @"ClickLeftSfx";
+        fileName = @"LeftClickSfx";
     } else {
         fileName = @"ClickRightSfx";
         

@@ -68,5 +68,6 @@
     
     [_gridModel setValueAtRow:7 andColumn:1 to:6];
     XCTAssertEqual([_gridModel getValueatRow:7 andColumn:1], 6, @"It was set correctly");
+    
 }
 @end
