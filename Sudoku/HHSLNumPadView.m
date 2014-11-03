@@ -121,8 +121,6 @@
     
     // Used to select the desired file name
     NSString* imageName = [NSString stringWithFormat:@"%ld.png",(long)num];
-    NSLog(@"%ld", (long)num);
-    NSLog(@"%@", imageName);
     
     UIImage *image = [UIImage imageNamed:imageName];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -152,8 +150,7 @@
     
     // Used to select the desired file name
     NSString* imageName = [NSString stringWithFormat:@"%ld.png",(long)num];
-    NSLog(@"%ld", (long)num);
-    NSLog(@"%@", imageName);
+
     
     UIImage *image = [UIImage imageNamed:imageName];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
